@@ -2,10 +2,14 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import SelectMode from './screens/SelectMode'
+import Dictionary from './Dictionary.js';
 
 export default function App() {
   return (
-    <SelectMode></SelectMode>
+    <View style={{flex:1}}>
+      {/*<SelectMode></SelectMode>*/}
+      <Dictionary></Dictionary>
+    </View>
   );
 }
 
