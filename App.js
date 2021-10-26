@@ -4,10 +4,11 @@ import { StyleSheet, Text, View } from 'react-native';
 import SelectMode from './screens/SelectMode'
 import Quiz from './Quiz';
 import Rewards from './Rewards';
+import Dictionary from './Dictionary';
 
 export default function App() {
   return (
-    <Quiz></Quiz>
+    <Dictionary></Dictionary>
   );
 }
 
