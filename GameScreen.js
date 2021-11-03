@@ -20,7 +20,7 @@ import Svg, { Line, Circle, G, Rect } from "react-native-svg";
 import axios from "axios";
 import GameOverScreen from "./GameOverScreen";
 
-const Game = (props) => {
+const GameScreen = (props) => {
   const word = ["A", "N", "T"];
   const wordList = [];
   const hint = "a small insect that lives in highly organized groups.";
@@ -328,4 +328,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Game;
+export default GameScreen;
