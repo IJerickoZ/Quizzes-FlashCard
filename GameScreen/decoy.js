@@ -1,70 +1,4 @@
-import React, { useState, useEffect } from "react";
-import {
-  View,
-  StyleSheet,
-  ScrollView,
-  FlatList,
-  TouchableOpacity,
-  TextInput,
-} from "react-native";
-import {
-  Divider,
-  Text,
-  Drawer,
-  Appbar,
-  ProgressBar,
-  Colors,
-  Button,
-} from "react-native-paper";
-import Svg, { Line, Circle, G, Rect } from "react-native-svg";
-import axios from "axios";
-import GameOverScreen from "./GameOverScreen";
-
-const GameScreen = (props) => {
-  const word = ["A", "N", "T"];
-  const wordList = [];
-  const hint = "a small insect that lives in highly organized groups.";
-  const [wrongCount, setWrongCount] = useState(0);
-  const [lifePoint, setLP] = useState(7);
-  const [correctWord, setCorrect] = useState([]);
-  const [enteredGuess, setEntered] = useState("");
-  const [status, setStatus] = useState(false);
-
-  word.forEach((item, index) => {
-    wordList.push(
-      <Text key={index} style={{ fontSize: 20, margin: 10 }}>
-        {correctWord.includes(item) ? item : "_"}
-      </Text>
-    );
-  });
-
-  const guessInput = (inputText) => {
-    setEntered(inputText);
-    let g = enteredGuess;
-    console.log(g);
-  };
-
-  const checkAnswer = () => {
-    console.log("Upper case is " + enteredGuess.toUpperCase());
-    if (word.includes(enteredGuess.toUpperCase())) {
-      const tester = correctWord;
-      tester.push(enteredGuess.toUpperCase());
-      setCorrect(tester);
-      setEntered("");
-      console.log(correctWord);
-      console.log(wordList);
-    } else {
-      setWrongCount(wrongCount + 1);
-      setLP(lifePoint - 1);
-    }
-  };
-
-  if(word.length == correctWord.length){
-      props.sentBack()
-  }
-
-  return (
-    <View style={{ flex: 1 }}>
+<View>
       <View style={styles.header}>
         <Text style={{ fontSize: 40 }}>Quiz Mode</Text>
         <Text style={{ fontSize: 20, paddingTop: "10px" }}>
@@ -74,10 +8,10 @@ const GameScreen = (props) => {
           โอกาสในการตอบเหลือ : {lifePoint}
         </Text>
       </View>
-      <View style={styles.quiz}>
-        <View
-          style={{ flex: 3, alignItems: "center", backgroundColor: "#ffe494" }}
-        >
+
+      <View style={{ flex: 2 }}>
+        {/* Quiz zone */}
+        <View style={styles.quiz}>
           {/* Hangman */}
           <Svg height="300" width="300">
             <G id="man">
@@ -258,74 +192,74 @@ const GameScreen = (props) => {
             </G>
           </Svg>
         </View>
+      </View>
         {/* guess word */}
-        <View style={{ flex: 2, alignItems: "flex-start", margin: 10 }}>
-          <Text style={{ fontSize: 30 }}>Guess the word</Text>
+        <View style={{ flex: 1, margin: 10 }}>
+          <Text style={{ fontSize: 30, alignItems: "flex-start" }}>
+            Guess the word
+          </Text>
           <View
             style={{
-              flex: 1,
-              width: 380,
               borderWidth: "1px",
               margin: 5,
-              justifyContent: "center",
+              alignItems: 'center',
               flexDirection: "row",
             }}
           >
+            {status ? null : (
+              <Text style={{ fontSize: 40, justifyContent: "center" }}>
+                Press Start Button
+              </Text>
+            )}
             {wordList}
           </View>
           <View
             style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
           >
             <TextInput
-              style={{ backgroundColor: "white", width: 200, height: 50 }}
+              style={{ backgroundColor: "white", width: 390, height: 50 }}
               keyboardType="default"
               maxLength={1}
               blurOnSubmit
               value={enteredGuess}
               onChangeText={(text) => guessInput(text)}
             ></TextInput>
-            <TouchableOpacity
-              style={{
-                alignItems: "center",
-                backgroundColor: "#DDDDDD",
-                padding: 10,
-                width: 390,
-              }}
-              onPress={checkAnswer}
-            >
-              <Text>Guess</Text>
-            </TouchableOpacity>
+            {status ? (
+              <TouchableOpacity
+                style={{
+                  alignItems: "center",
+                  backgroundColor: "#DDDDDD",
+                  padding: 10,
+                  width: 390,
+                }}
+                onPress={checkAnswer}
+              >
+                <Text>Guess</Text>
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity
+                style={{
+                  alignItems: "center",
+                  backgroundColor: "#DDDDDD",
+                  padding: 10,
+                  width: 390,
+                }}
+                onPress={() => {
+                  StartGame();
+                }}
+              >
+                <Text>Start</Text>
+              </TouchableOpacity>
+            )}
           </View>
         </View>
-      </View>
+
       <View style={styles.hint}>
         <View style={{ flex: 1 }}>
-          <Text style={{ fontSize: 30, padding: 10 }}>Hint</Text>
+          <Text style={{ fontSize: 30, padding: 10 }}>Hint : คำใบ้</Text>
         </View>
         <View style={{ flex: 3 }}>
           <Text style={{ fontSize: 20, padding: 10 }}>{hint}</Text>
         </View>
       </View>
     </View>
-  );
-};
-
-const styles = StyleSheet.create({
-  header: {
-    flex: 1,
-    backgroundColor: "#ffe2cc",
-    alignItems: "center",
-    paddingTop: "10px",
-  },
-  quiz: {
-    flex: 3,
-    backgroundColor: "#ccfff6",
-  },
-  hint: {
-    flex: 1,
-    backgroundColor: "#edccff",
-    alignItems: "center",
-  },
-});
-
-export default GameScreen;

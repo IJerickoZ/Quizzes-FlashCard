@@ -1,10 +1,5 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-//screens
-import SelectMode from './screens/SelectMode'
-import Quiz from './Quiz';
-import Rewards from './Rewards';
-import Dictionary from './Dictionary';
 
 const GameOverScreen = () => {
   return (

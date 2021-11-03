@@ -33,22 +33,20 @@ const Quiz = (props) => {
   const [enteredGuess, setEntered] = useState("");
    */
   const [status, setStatus] = useState(false);
+  const word = [];
+  const definition = [];
+  axios.get("https://random-words-api.vercel.app/word").then((response) => {
+    console.log(response);
+    let randomWord = response.data[0].word;
+    console.log(randomWord);
+    for (var i = 0; i < randomWord.length; i++) {
+      word.push(randomWord.substring(i, i + 1).toUpperCase());
+    }
+    definition.push(response.data[0].definition)
+    console.log(word);
+  });
 
-  /* function getRandom(){
-        axios.get(
-        "https://random-word-api.herokuapp.com/word?number=1"
-      ).then((response) => {
-        console.log(response.data[0]);
-        randomWord = response.data[0];
-        console.log(randomWord)
-        for(var i=0 ; i < randomWord.length ; i++){
-            word.push(randomWord.substring(i, i+1).toUpperCase())
-        }
-
-        console.log(word)
-      });
-    } */
-
+  
   /* Generate Word */
 
   /* word.forEach((item, index) => {
@@ -84,31 +82,19 @@ const Quiz = (props) => {
     setStatus(true);
   };
 
-  let content = <GameScreen sentBack={GameoverHandler}></GameScreen>;
+  let content = (
+    <GameScreen
+      sentBack={GameoverHandler}
+      sentWord={word}
+      sendDef={definition}
+    ></GameScreen>
+  );
 
   if (status == true) {
     content = <GameOverScreen></GameOverScreen>;
   }
 
-  return <View>{content}</View>;
+  return <View style={{ flex: 1 }}>{content}</View>;
 };
-
-const styles = StyleSheet.create({
-  header: {
-    flex: 1,
-    backgroundColor: "#ffe2cc",
-    alignItems: "center",
-    paddingTop: "10px",
-  },
-  quiz: {
-    flex: 3,
-    backgroundColor: "#ccfff6",
-  },
-  hint: {
-    flex: 1,
-    backgroundColor: "#edccff",
-    alignItems: "center",
-  },
-});
 
 export default Quiz;
