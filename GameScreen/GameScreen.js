@@ -15,6 +15,9 @@ import {
   ProgressBar,
   Colors,
   Button,
+  Modal,
+  Portal,
+  Provider,
 } from "react-native-paper";
 import Svg, { Line, Circle, G, Rect } from "react-native-svg";
 import axios from "axios";
@@ -25,11 +28,11 @@ const GameScreen = (props) => {
   const [word, setWord] = useState([]);
   const [hint, setHint] = useState("");
   const [wrongCount, setWrongCount] = useState(0);
-  const [lifePoint, setLP] = useState(0);
+  const [lifePoint, setLP] = useState(7);
   const [correctWord, setCorrect] = useState([]);
   const [enteredGuess, setEntered] = useState("");
   const [status, setStatus] = useState(false);
-  const [counter, setCount] = useState(99);
+  const [victoryTrigger, setVictory] = useState(99);
   const [correctCount, setCorrectCount] = useState(0);
 
   word.forEach((item, index) => {
@@ -48,9 +51,9 @@ const GameScreen = (props) => {
 
   const StartGame = () => {
     setStatus(true);
-    setCount(props.sentWord.length);
     setWord(props.sentWord);
     setHint(props.sendDef);
+    setVictory(props.sentWord.length)
     setLP(7);
   };
 
@@ -61,8 +64,8 @@ const GameScreen = (props) => {
     //to debug correct count char
     let count = 0;
     if (props.sentWord.includes(enteredGuess.toUpperCase())) {
-      for (var i=0; i < word.length; i++){
-        if(enteredGuess.toUpperCase() === word[i]){
+      for (var i = 0; i < word.length; i++) {
+        if (enteredGuess.toUpperCase() === word[i]) {
           count += 1;
         }
       }
@@ -74,16 +77,22 @@ const GameScreen = (props) => {
       setEntered("");
       console.log("Char in corect list : " + correctWord);
       console.log("Wordlist length = " + wordList.length);
-      console.log("Correct count = " + correctCount)
+      console.log("Correct count = " + correctCount);
     } else {
       setWrongCount(wrongCount + 1);
       setLP(lifePoint - 1);
     }
   };
 
-  if (lifePoint < 0) {
-    props.sentBack();
+  //Game ending condition
+  if (lifePoint <= 0) {
+    props.sentBack(true);
   }
+  if (correctCount == victoryTrigger) {
+      props.sentBack(false);
+  }
+
+
 
   return (
     <View style={styles.container}>
@@ -100,7 +109,9 @@ const GameScreen = (props) => {
         </Text>
       </View>
       {/* Hang man */}
-      <View style={{ flex: 2, backgroundColor: "#6fff00", alignItems: 'center' }}>
+      <View
+        style={{ flex: 2, backgroundColor: "#6fff00", alignItems: "center" }}
+      >
         <Svg height="300" width="300">
           <G id="man">
             <G id="head">
@@ -302,7 +313,14 @@ const GameScreen = (props) => {
         </View>
         <View style={{ justifyContent: "center", alignItems: "center" }}>
           <TextInput
-            style={{ backgroundColor: "white", width: 390, height: 50, textAlign: 'center', fontSize: 30, fontWeight: 'bold' }}
+            style={{
+              backgroundColor: "white",
+              width: 390,
+              height: 50,
+              textAlign: "center",
+              fontSize: 30,
+              fontWeight: "bold",
+            }}
             keyboardType="default"
             maxLength={1}
             blurOnSubmit

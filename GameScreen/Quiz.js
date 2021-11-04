@@ -20,6 +20,7 @@ import Svg, { Line, Circle, G, Rect } from "react-native-svg";
 import axios from "axios";
 import GameOverScreen from "./GameOverScreen";
 import GameScreen from "./GameScreen";
+import VictoryScreen from "./VictoryScreen";
 /* expo install react-native-svg */
 
 const Quiz = (props) => {
@@ -32,7 +33,7 @@ const Quiz = (props) => {
   const [correctWord, setCorrect] = useState([]);
   const [enteredGuess, setEntered] = useState("");
    */
-  const [status, setStatus] = useState(false);
+  const [status, setStatus] = useState();
   const word = [];
   const definition = [];
   axios.get("https://random-words-api.vercel.app/word").then((response) => {
@@ -78,8 +79,8 @@ const Quiz = (props) => {
     }
   }; */
 
-  const GameoverHandler = () => {
-    setStatus(true);
+  const GameoverHandler = ( condition ) => {
+    setStatus(condition);
   };
 
   let content = (
@@ -92,6 +93,9 @@ const Quiz = (props) => {
 
   if (status == true) {
     content = <GameOverScreen></GameOverScreen>;
+  }
+  if(status == false){
+    content = <VictoryScreen></VictoryScreen>
   }
 
   return <View style={{ flex: 1 }}>{content}</View>;
