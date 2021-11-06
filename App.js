@@ -2,7 +2,6 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import SelectMode from './screens/SelectMode'
-import Quiz from './Quiz';
 import Rewards from './Rewards';
 import Dictionary from './Dictionary';
 import DicDetail from './DicDetail';
