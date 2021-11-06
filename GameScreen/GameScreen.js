@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import {
   View,
   StyleSheet,
-  ScrollView,
-  FlatList,
   TouchableOpacity,
   TextInput,
 } from "react-native";
@@ -23,7 +21,9 @@ import Svg, { Line, Circle, G, Rect } from "react-native-svg";
 import axios from "axios";
 
 const GameScreen = (props) => {
+  //check props recive
   console.log(props);
+  //set up before game start
   const wordList = [];
   const [word, setWord] = useState([]);
   const [hint, setHint] = useState("");
@@ -34,7 +34,9 @@ const GameScreen = (props) => {
   const [status, setStatus] = useState(false);
   const [victoryTrigger, setVictory] = useState(99);
   const [correctCount, setCorrectCount] = useState(0);
+  const [InputStatus, setInputStatus] = useState(false);
 
+  //create puzzle word
   word.forEach((item, index) => {
     wordList.push(
       <Text key={index} style={{ fontSize: 20, margin: 10 }}>
@@ -43,33 +45,39 @@ const GameScreen = (props) => {
     );
   });
 
+  //check input user
   const guessInput = (inputText) => {
     setEntered(inputText);
     let g = enteredGuess;
     console.log(g);
   };
 
+  //game start set up
   const StartGame = () => {
     setStatus(true);
     setWord(props.sentWord);
     setHint(props.sendDef);
-    setVictory(props.sentWord.length)
+    setVictory(props.sentWord.length);
+    setInputStatus(true);
     setLP(7);
   };
 
+
+  //check input
   const checkAnswer = () => {
     console.log("Upper case is " + enteredGuess.toUpperCase());
+    //reset input
     setEntered("");
-
     //to debug correct count char
     let count = 0;
+    //correct answer
     if (props.sentWord.includes(enteredGuess.toUpperCase())) {
+      //debug count correction if IN PUZZLE HAVE DUPLICATE CHAR
       for (var i = 0; i < word.length; i++) {
         if (enteredGuess.toUpperCase() === word[i]) {
           count += 1;
         }
       }
-
       const tester = correctWord;
       tester.push(enteredGuess.toUpperCase());
       setCorrectCount(correctCount + count);
@@ -79,6 +87,7 @@ const GameScreen = (props) => {
       console.log("Wordlist length = " + wordList.length);
       console.log("Correct count = " + correctCount);
     } else {
+      //wrong answer
       setWrongCount(wrongCount + 1);
       setLP(lifePoint - 1);
     }
@@ -311,6 +320,7 @@ const GameScreen = (props) => {
           )}
           {wordList}
         </View>
+        {/* input zone */}
         <View style={{ justifyContent: "center", alignItems: "center" }}>
           <TextInput
             style={{
@@ -324,6 +334,7 @@ const GameScreen = (props) => {
             keyboardType="default"
             maxLength={1}
             blurOnSubmit
+            editable={InputStatus}
             value={enteredGuess}
             onChangeText={(text) => guessInput(text)}
           ></TextInput>

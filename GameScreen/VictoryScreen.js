@@ -3,8 +3,9 @@ import { StyleSheet, Text, View } from 'react-native';
 
 const VictoryScreen = () => {
   return (
-    <View>
-        <Text>Victory Bruhhhhhhhhh</Text>
+    <View style={styles.container}>
+        <Text>Congrantulation!!!</Text>
+        <Text>You win</Text>
     </View>
   );
 }

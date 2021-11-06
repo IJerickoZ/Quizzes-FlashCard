@@ -3,8 +3,10 @@ import { StyleSheet, Text, View } from 'react-native';
 
 const GameOverScreen = () => {
   return (
-    <View>
-        <Text>Bruhhhh</Text>
+    <View style={styles.container}>
+        <Text>Bruhhh</Text>
+        <Text>You lose</Text>
+        <Text>Try agian?</Text>
     </View>
   );
 }
