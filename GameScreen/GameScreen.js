@@ -4,6 +4,8 @@ import {
   StyleSheet,
   TouchableOpacity,
   TextInput,
+  Modal,
+  Alert,
 } from "react-native";
 import {
   Divider,
@@ -13,7 +15,6 @@ import {
   ProgressBar,
   Colors,
   Button,
-  Modal,
   Portal,
   Provider,
 } from "react-native-paper";
@@ -35,6 +36,9 @@ const GameScreen = (props) => {
   const [victoryTrigger, setVictory] = useState(99);
   const [correctCount, setCorrectCount] = useState(0);
   const [InputStatus, setInputStatus] = useState(false);
+
+  //modal
+  const [modalVisible, setModalVisible] = useState(false);
 
   //create puzzle word
   word.forEach((item, index) => {
@@ -98,8 +102,31 @@ const GameScreen = (props) => {
     props.sentBack(true);
   }
   if (correctCount == victoryTrigger) {
-      props.sentBack(false);
+    showAlert
+
+    //sent func to quiz to victory screens
+    /* props.sentBack(false); */
   }
+
+  const showAlert = () =>
+  Alert.alert(
+    "Alert Title",
+    "My Alert Msg",
+    [
+      {
+        text: "Cancel",
+        onPress: () => Alert.alert("Cancel Pressed"),
+        style: "cancel",
+      },
+    ],
+    {
+      cancelable: true,
+      onDismiss: () =>
+        Alert.alert(
+          "This alert was dismissed by tapping outside of the alert dialog."
+        ),
+    }
+  );
 
 
 
@@ -372,6 +399,7 @@ const GameScreen = (props) => {
         <Text style={{ fontSize: 30, padding: 10 }}>Hint : คำใบ้</Text>
         <Text style={{ fontSize: 20, padding: 10 }}>{hint}</Text>
       </View>
+
     </View>
   );
 };

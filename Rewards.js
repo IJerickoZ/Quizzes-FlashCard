@@ -7,7 +7,8 @@ function Rewards() {
     <View style={{flex:1}}>
       {/* ส่วนที่ 1 */}
       <View style={{backgroundColor: "white", alignItems: 'center', justifyContent: 'center', margin: 20}} >
-        <Text style={{fontSize: 35}}>ระดับความสำเร็จ</Text>
+        <Text style={{fontSize: 35}}>รางวัลความสำเร็จ</Text>
+        <Text>คะแนนควมสำเร็จของ : 1/10</Text>
       </View>
 
       <ProgressBar progress={0.1} color={Colors.yellow800} style={{height:30}}/>
