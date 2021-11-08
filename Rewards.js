@@ -5,11 +5,6 @@ import { Divider, Text, Drawer, Appbar, ProgressBar, Colors   } from 'react-nati
 function Rewards() {
   return (
     <View style={{flex:1}}>
-      {/* Header */}
-      <Appbar.Header style={{backgroundColor: "#9575CD"}}>
-        <Appbar.Content title="รางวัลฉายา" subtitle={'ท่านสามารถดูฉายาที่ปลดล็อคได้ที่นี้'} style={{font: "white"}}/>
-      </Appbar.Header>
-
       {/* ส่วนที่ 1 */}
       <View style={{backgroundColor: "white", alignItems: 'center', justifyContent: 'center', margin: 20}} >
         <Text style={{fontSize: 35}}>ระดับความสำเร็จ</Text>
