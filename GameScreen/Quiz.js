@@ -41,7 +41,7 @@ const Quiz = (props) => {
   if (status == true) {
     content = <GameOverScreen answer={correctWord}></GameOverScreen>;
   }
-  if(status == false){
+  else if(status == false){
     content = <VictoryScreen reset={GameReset}></VictoryScreen>
   }
 
