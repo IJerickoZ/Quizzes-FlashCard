@@ -4,12 +4,12 @@ import {
   StyleSheet,
   TouchableOpacity,
   TextInput,
+  Text,
   Modal,
   Alert,
 } from "react-native";
 import {
   Divider,
-  Text,
   Drawer,
   Appbar,
   ProgressBar,
@@ -125,10 +125,10 @@ const GameScreen = (props) => {
       <View
         style={{ flex: 0.5, backgroundColor: "#ffe494", alignItems: "center" }}
       >
-        <Text style={{ fontSize: 20, paddingTop: 10 }}>
+        <Text style={{ fontSize: 20 }}>
           คะแนนของคุณคือ : 0
         </Text>
-        <Text style={{ fontSize: 20, paddingTop: 10 }}>
+        <Text style={{ fontSize: 20 }}>
           โอกาสในการตอบเหลือ : {lifePoint}
         </Text>
       </View>
@@ -359,23 +359,6 @@ const GameScreen = (props) => {
 };
 
 const styles = StyleSheet.create({
-  header: {
-    flex: 1,
-    backgroundColor: "#ffe2cc",
-    alignItems: "center",
-    paddingTop: 10,
-  },
-  quiz: {
-    flex: 2,
-    backgroundColor: "#ccfff6",
-    width: "100%",
-  },
-  hint: {
-    flex: 1,
-    backgroundColor: "#edccff",
-    alignItems: "center",
-    width: "100%",
-  },
   container: {
     flex: 1,
     backgroundColor: "#fff",
