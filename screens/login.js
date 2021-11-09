@@ -5,7 +5,6 @@ import { StyleSheet, Text, View } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
-import test from '../test'
 
 const Login = () => {
   const [username, setUser] = React.useState('');
