@@ -18,7 +18,7 @@ import {
   Portal,
   Provider,
 } from "react-native-paper";
-import Svg, { Line, Circle, G, Rect } from "react-native-svg";
+import Svg, { Line, Circle, G } from "react-native-svg";
 import axios from "axios";
 
 const GameScreen = (props) => {
@@ -36,9 +36,6 @@ const GameScreen = (props) => {
   const [victoryTrigger, setVictory] = useState(99);
   const [correctCount, setCorrectCount] = useState(0);
   const [InputStatus, setInputStatus] = useState(false);
-
-  //modal
-  const [modalVisible, setModalVisible] = useState(false);
 
   //create puzzle word
   word.forEach((item, index) => {
@@ -58,12 +55,25 @@ const GameScreen = (props) => {
 
   //game start set up
   const StartGame = () => {
-    setStatus(true);
-    setWord(props.sentWord);
-    setHint(props.sendDef);
-    setVictory(props.sentWord.length);
-    setInputStatus(true);
-    setLP(7);
+
+    //get random word
+  axios.get("https://random-words-api.vercel.app/word").then((response) => {
+    console.log(response);
+    const randomWord = response.data[0].word;
+    console.log(randomWord);
+    const splitWord = [];
+    for (var i = 0; i < randomWord.length; i++) {
+      splitWord.push(randomWord.substring(i, i + 1).toUpperCase());
+    }
+    console.log(splitWord);
+    setStatus(true),
+    setWord(splitWord),
+    setHint(response.data[0].definition),
+    setVictory(response.data[0].word.length),
+    setInputStatus(true),
+    setLP(7)
+  });
+
   };
 
 
@@ -75,7 +85,7 @@ const GameScreen = (props) => {
     //to debug correct count char
     let count = 0;
     //correct answer
-    if (props.sentWord.includes(enteredGuess.toUpperCase())) {
+    if (word.includes(enteredGuess.toUpperCase())) {
       //debug count correction if IN PUZZLE HAVE DUPLICATE CHAR
       for (var i = 0; i < word.length; i++) {
         if (enteredGuess.toUpperCase() === word[i]) {
@@ -99,48 +109,26 @@ const GameScreen = (props) => {
 
   //Game ending condition
   if (lifePoint <= 0) {
-    props.sentBack(true);
+    //sent trigger
+    props.GameEndHandler(true, word);
   }
   if (correctCount == victoryTrigger) {
-    showAlert
-
     //sent func to quiz to victory screens
-    /* props.sentBack(false); */
+    //sent trigger
+    props.GameEndHandler(false, word);
+    //
   }
-
-  const showAlert = () =>
-  Alert.alert(
-    "Alert Title",
-    "My Alert Msg",
-    [
-      {
-        text: "Cancel",
-        onPress: () => Alert.alert("Cancel Pressed"),
-        style: "cancel",
-      },
-    ],
-    {
-      cancelable: true,
-      onDismiss: () =>
-        Alert.alert(
-          "This alert was dismissed by tapping outside of the alert dialog."
-        ),
-    }
-  );
-
-
 
   return (
     <View style={styles.container}>
       {/* header */}
       <View
-        style={{ flex: 1, backgroundColor: "#ffe494", alignItems: "center" }}
+        style={{ flex: 0.5, backgroundColor: "#ffe494", alignItems: "center" }}
       >
-        <Text style={{ fontSize: 40 }}>Quiz Mode</Text>
-        <Text style={{ fontSize: 20, paddingTop: "10px" }}>
+        <Text style={{ fontSize: 20, paddingTop: 10 }}>
           คะแนนของคุณคือ : 0
         </Text>
-        <Text style={{ fontSize: 20, paddingTop: "10px" }}>
+        <Text style={{ fontSize: 20, paddingTop: 10 }}>
           โอกาสในการตอบเหลือ : {lifePoint}
         </Text>
       </View>
@@ -161,46 +149,10 @@ const GameScreen = (props) => {
                   fill="white"
                 />
               ) : null}
-              {wrongCount >= 2 && wrongCount < 7 ? (
+              {wrongCount >= 2  ? (
                 <G id="rEyes">
                   <Circle cx="193" cy="80" r="4" />
                   <Circle cx="207" cy="80" r="4" />
-                </G>
-              ) : null}
-              {wrongCount >= 7 ? (
-                <G id="xEyes">
-                  <Line
-                    x1="190"
-                    y1="78"
-                    x2="196"
-                    y2="84"
-                    stroke="black"
-                    strokeWidth="1"
-                  />
-                  <Line
-                    x1="204"
-                    y1="78"
-                    x2="210"
-                    y2="84"
-                    stroke="black"
-                    strokeWidth="1"
-                  />
-                  <Line
-                    x1="190"
-                    y1="84"
-                    x2="196"
-                    y2="78"
-                    stroke="black"
-                    strokeWidth="1"
-                  />
-                  <Line
-                    x1="204"
-                    y1="84"
-                    x2="210"
-                    y2="78"
-                    stroke="black"
-                    strokeWidth="1"
-                  />
                 </G>
               ) : null}
             </G>
@@ -328,7 +280,7 @@ const GameScreen = (props) => {
         </Svg>
       </View>
       {/* Guess Zone */}
-      <View style={{ flex: 1.5, backgroundColor: "#6bffb5" }}>
+      <View style={{ flex: 1.5 }}>
         <Text style={{ fontSize: 30, alignItems: "flex-start" }}>
           Guess the word
         </Text>
@@ -357,6 +309,7 @@ const GameScreen = (props) => {
               textAlign: "center",
               fontSize: 30,
               fontWeight: "bold",
+              borderWidth: 1,
             }}
             keyboardType="default"
             maxLength={1}
@@ -369,37 +322,38 @@ const GameScreen = (props) => {
             <TouchableOpacity
               style={{
                 alignItems: "center",
-                backgroundColor: "#DDDDDD",
+                backgroundColor: "#6200ee",
                 padding: 10,
                 width: 390,
+                fontColor: "white"
               }}
               onPress={checkAnswer}
             >
-              <Text>Guess</Text>
+              <Text style={{color: "white"}}>Guess</Text>
             </TouchableOpacity>
           ) : (
             <TouchableOpacity
               style={{
                 alignItems: "center",
-                backgroundColor: "#DDDDDD",
+                backgroundColor: "#6200ee",
                 padding: 10,
                 width: 390,
+                color: "white"
               }}
               onPress={() => {
                 StartGame();
               }}
             >
-              <Text>Start</Text>
+              <Text style={{color: "white"}}>Start</Text>
             </TouchableOpacity>
           )}
         </View>
       </View>
       {/* Hint Zone */}
-      <View style={{ flex: 1, backgroundColor: "#6bd0ff" }}>
+      <View style={{ flex: 1}}>
         <Text style={{ fontSize: 30, padding: 10 }}>Hint : คำใบ้</Text>
-        <Text style={{ fontSize: 20, padding: 10 }}>{hint}</Text>
+        <Text style={{ fontSize: 24, padding: 10, color:'#ff4545' }}>{hint}</Text>
       </View>
-
     </View>
   );
 };
@@ -409,7 +363,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#ffe2cc",
     alignItems: "center",
-    paddingTop: "10px",
+    paddingTop: 10,
   },
   quiz: {
     flex: 2,
