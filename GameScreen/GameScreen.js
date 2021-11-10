@@ -20,6 +20,8 @@ import {
 } from "react-native-paper";
 import Svg, { Line, Circle, G } from "react-native-svg";
 import axios from "axios";
+import { random } from "./random";
+import { metaData } from "./random";
 
 const GameScreen = (props) => {
   //check props recive
@@ -53,26 +55,35 @@ const GameScreen = (props) => {
     console.log(g);
   };
 
+  //get ramdom word
+  const getRandom = () => {
+    let randomIndex = Math.floor(Math.random() * (metaData.length - 1));
+    return random(randomIndex);
+  }
+
   //game start set up
   const StartGame = () => {
 
-    //get random word
-  axios.get("https://random-words-api.vercel.app/word").then((response) => {
-    console.log(response);
-    const randomWord = response.data[0].word;
-    console.log(randomWord);
-    const splitWord = [];
-    for (var i = 0; i < randomWord.length; i++) {
-      splitWord.push(randomWord.substring(i, i + 1).toUpperCase());
-    }
-    console.log(splitWord);
-    setStatus(true),
-    setWord(splitWord),
-    setHint(response.data[0].definition),
-    setVictory(response.data[0].word.length),
-    setInputStatus(true),
-    setLP(7)
-  });
+    //get defination
+    axios.get("https://api.dictionaryapi.dev/api/v2/entries/en_US/" + getRandom()).then((response) => {
+        console.log(response);
+        const randomWord = response.data[0].word;
+        console.log(randomWord);
+        const splitWord = [];
+        for (var i = 0; i < randomWord.length; i++) {
+          splitWord.push(randomWord.substring(i, i + 1).toUpperCase());
+        }
+        console.log(splitWord);
+        setStatus(true),
+        setWord(splitWord),
+        setHint(response.data[0].meanings[0].definitions[0].definition),
+        setVictory(response.data[0].word.length),
+        setInputStatus(true),
+        setLP(7)
+      });
+  
+
+  
 
   };
 
