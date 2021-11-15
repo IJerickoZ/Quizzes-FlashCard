@@ -40,7 +40,8 @@ router.post("/regis", async function(req, res, next) {
                     {
                         username:username,
                         password:password,
-                        id: number + 1
+                        id: number + 1,
+                        score: 0
                     }
                 ])
                 res.send("Success!")
