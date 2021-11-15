@@ -3,7 +3,8 @@ const path = require("path")
 const client = require("../config");
 const router = express.Router();
 const Joi = require('joi')
-const { generateToken } = require("../util/genToken")
+const { generateToken } = require("../util/genToken");
+const { json } = require("express");
 
 const loginSchema = Joi.object({
     username: Joi.string().required(),
@@ -43,7 +44,7 @@ router.post('/login', async (req, res, next) => {
                     ])
                     console.log("add token!")
                 }
-                res.status(200).send(token.token)
+                res.status(200).send({token : token.token, score: aaa.score})
             }
             res.send("ok")
         }, transactionOptions)
