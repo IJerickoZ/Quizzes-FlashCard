@@ -1,13 +1,21 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import Svg, { Line, Circle, G } from "react-native-svg";
+import { useFonts } from 'expo-font';
 
 const GameOverScreen = (props) => {
+  console.log(props)
+  const [loaded] = useFonts({
+    MochiyPopPOne: require('../assets/fonts/MochiyPopPOneRegular.ttf'),
+  });
+
   return (
     <View style={styles.container}>
-      <Text>Bruhhh</Text>
-      <Text>You lose</Text>
-      <Text>Correct word is : {props.answer}</Text>
+      <Text style={{fontSize: 36, fontFamily: 'MochiyPopPOne', color: 'red'}}>Game Over</Text>
+      <Text style={{fontSize: 24, fontFamily: 'MochiyPopPOne'}}>You lose</Text>
+      <Text style={{fontSize: 24, fontFamily: 'MochiyPopPOne'}}>Correct word is</Text>
+      <Text style={{fontSize: 36, fontFamily: 'MochiyPopPOne'}}>{props.answer}</Text>
+      <Text style={{fontSize: 24, color: '#2eab00', margin: 5}}>{props.def}</Text>
       <Svg height="300" width="300">
         <G id="man">
           <G id="head">
@@ -19,7 +27,6 @@ const GameOverScreen = (props) => {
               strokeWidth="4"
               fill="white"
             />
-            
 
             <G id="xEyes">
               <Line
@@ -171,6 +178,24 @@ const GameOverScreen = (props) => {
           />
         </G>
       </Svg>
+      <View style={{ paddingTop: 10 }}>
+        <TouchableOpacity
+          style={{
+            alignItems: "center",
+            backgroundColor: "#6200ee",
+            width: 390,
+            height: 40,
+            borderRadius: 20,
+            marginTop: 10,
+          }}
+          onPress={()=>{
+            props.GameReset()
+          }}
+        >
+          <Text style={{fontSize: 24, color: 'white', fontFamily: 'MochiyPopPOne'}}>Try agian?</Text>
+          
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -178,7 +203,6 @@ const GameOverScreen = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
   },

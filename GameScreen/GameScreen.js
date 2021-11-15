@@ -2,28 +2,29 @@ import React, { useState, useEffect } from "react";
 import {
   View,
   StyleSheet,
-  TouchableOpacity,
-  TextInput,
   Text,
-  Modal,
-  Alert,
+  ScrollView,
+  TouchableOpacity
 } from "react-native";
 import {
-  Divider,
-  Drawer,
-  Appbar,
-  ProgressBar,
-  Colors,
+  TextInput,
+  Title,
   Button,
-  Portal,
-  Provider,
 } from "react-native-paper";
 import Svg, { Line, Circle, G } from "react-native-svg";
 import axios from "axios";
 import { random } from "./random";
 import { metaData } from "./random";
+import { useFonts } from 'expo-font';
 
 const GameScreen = (props) => {
+  const [loaded] = useFonts({
+    MochiyPopPOne: require('../assets/fonts/MochiyPopPOneRegular.ttf'),
+    Kanit: require('../assets/fonts/Kanit-Regular.ttf'),
+    kanit_Extralight: require('../assets/fonts/Kanit-ExtraLight.ttf')
+  });
+  
+
   //check props recive
   console.log(props);
   //set up before game start
@@ -42,7 +43,7 @@ const GameScreen = (props) => {
   //create puzzle word
   word.forEach((item, index) => {
     wordList.push(
-      <Text key={index} style={{ fontSize: 20, margin: 10 }}>
+      <Text key={index} style={{ fontSize: 20, margin: 10, color: "HEXCODE" }}>
         {correctWord.includes(item) ? item : "_"}
       </Text>
     );
@@ -121,12 +122,12 @@ const GameScreen = (props) => {
   //Game ending condition
   if (lifePoint <= 0) {
     //sent trigger
-    props.GameEndHandler(true, word);
+    props.GameEndHandler(true, word, hint);
   }
   if (correctCount == victoryTrigger) {
     //sent func to quiz to victory screens
     //sent trigger
-    props.GameEndHandler(false, word);
+    props.GameEndHandler(false, word, hint);
     //
   }
 
@@ -134,18 +135,21 @@ const GameScreen = (props) => {
     <View style={styles.container}>
       {/* header */}
       <View
-        style={{ flex: 0.5, backgroundColor: "#ffe494", alignItems: "center" }}
+        style={{ flex: 1, alignItems: "center" }}
       >
-        <Text style={{ fontSize: 20 }}>
-          คะแนนของคุณคือ : 0
+        <Text style={{fontFamily:'MochiyPopPOne', fontSize: 36, color: 'rgb(98, 0, 238)' }}>
+          H a n g M a n!?
         </Text>
-        <Text style={{ fontSize: 20 }}>
+        <Text style={{ fontSize: 20, fontFamily: 'kanit' }}>
+          คะแนนสะสมของคุณคือ : 0
+        </Text>
+        <Text style={{ fontSize: 20, fontFamily: 'kanit' }}>
           โอกาสในการตอบเหลือ : {lifePoint}
         </Text>
       </View>
       {/* Hang man */}
       <View
-        style={{ flex: 2, backgroundColor: "#6fff00", alignItems: "center" }}
+        style={{ flex: 2, alignItems: "center" }}
       >
         <Svg height="300" width="300">
           <G id="man">
@@ -292,19 +296,17 @@ const GameScreen = (props) => {
       </View>
       {/* Guess Zone */}
       <View style={{ flex: 1.5 }}>
-        <Text style={{ fontSize: 30, alignItems: "flex-start" }}>
-          Guess the word
-        </Text>
         <View
           style={{
             borderWidth: "2px",
             margin: 5,
             alignItems: "center",
+            justifyContent: 'center',
             flexDirection: "row",
           }}
         >
           {status ? null : (
-            <Text style={{ fontSize: 40, justifyContent: "center" }}>
+            <Text style={{ fontSize: 30, fontFamily: 'MochiyPopPOne'}}>
               Press Start Button
             </Text>
           )}
@@ -316,12 +318,13 @@ const GameScreen = (props) => {
             style={{
               backgroundColor: "white",
               width: 390,
-              height: 50,
               textAlign: "center",
               fontSize: 30,
               fontWeight: "bold",
               borderWidth: 1,
             }}
+            placeholder= "Enter a letter here"
+            label = "Guess the word"
             keyboardType="default"
             maxLength={1}
             blurOnSubmit
@@ -330,40 +333,48 @@ const GameScreen = (props) => {
             onChangeText={(text) => guessInput(text)}
           ></TextInput>
           {status ? (
-            <TouchableOpacity
-              style={{
-                alignItems: "center",
-                backgroundColor: "#6200ee",
-                padding: 10,
-                width: 390,
-                fontColor: "white"
-              }}
+
+            
+            <TouchableOpacity style={{
+              alignItems: "center",
+              backgroundColor: "#6200ee",
+              borderRadius: 20,
+              marginTop: 10,
+              width: 390,
+              height: 40,
+              marginTop: 10,
+              justifyContent: 'center'  
+            }}
               onPress={checkAnswer}
-            >
-              <Text style={{color: "white"}}>Guess</Text>
+              >
+               <Text style={{fontSize: 24, color: 'white', fontFamily: 'MochiyPopPOne'}}>Guess</Text>
             </TouchableOpacity>
+
           ) : (
-            <TouchableOpacity
-              style={{
-                alignItems: "center",
-                backgroundColor: "#6200ee",
-                padding: 10,
-                width: 390,
-                color: "white"
+            <TouchableOpacity style={{
+              alignItems: "center",
+              backgroundColor: "#6200ee",
+              width: 390,
+              height: 40,
+              borderRadius: 20,
+              marginTop: 10,
+              justifyContent: 'center'
               }}
-              onPress={() => {
-                StartGame();
-              }}
-            >
-              <Text style={{color: "white"}}>Start</Text>
+              onPress={StartGame}
+              >
+                <Text style={{fontSize: 24, color: 'white', fontFamily: 'MochiyPopPOne'}}>Start</Text>
             </TouchableOpacity>
           )}
         </View>
       </View>
       {/* Hint Zone */}
       <View style={{ flex: 1}}>
-        <Text style={{ fontSize: 30, padding: 10 }}>Hint : คำใบ้</Text>
-        <Text style={{ fontSize: 24, padding: 10, color:'#ff4545' }}>{hint}</Text>
+        <Title style={{ fontSize: 30, fontFamily: 'MochiyPopPOne'}}>Hint : คำใบ้</Title>
+        <ScrollView>
+          <Text style={{ fontSize: 24, paddingLeft: 5, color:'#ff4545' }}>
+          {hint}
+          </Text>
+        </ScrollView>
       </View>
     </View>
   );
@@ -372,7 +383,7 @@ const GameScreen = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#f7f7f7",
   },
 });
 

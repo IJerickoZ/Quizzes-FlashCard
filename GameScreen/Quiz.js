@@ -16,18 +16,21 @@ import VictoryScreen from "./VictoryScreen";
 const Quiz = (props) => {
   /* set up */
   const [status, setStatus] = useState();
-  const [correctWord, setCorrect] = useState("")
+  const [correctWord, setCorrect] = useState("");
+  const [defination, setDef] = useState("");
   /* const word = [];
   const definition = []; */
   
-  const GameEndHandler = ( condition, answer ) => {
+  const GameEndHandler = ( condition, answer, def ) => {
     setStatus(condition);
-    setCorrect(answer)
+    setCorrect(answer);
+    setDef(def);
   };
 
   const GameReset = () => {
     setStatus();
     setCorrect('');
+    setDef('');
   };
 
   let content = (
@@ -39,10 +42,10 @@ const Quiz = (props) => {
   );
 
   if (status == true) {
-    content = <GameOverScreen answer={correctWord}></GameOverScreen>;
+    content = <GameOverScreen answer={correctWord} GameReset={GameReset} def={defination}></GameOverScreen>;
   }
   else if(status == false){
-    content = <VictoryScreen reset={GameReset}></VictoryScreen>
+    content = <VictoryScreen answer={correctWord} GameReset={GameReset} def={defination}></VictoryScreen>
   }
 
   return <View style={{ flex: 1 }}>{content}</View>;
