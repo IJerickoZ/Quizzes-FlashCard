@@ -22,12 +22,15 @@ const Register = () => {
       password: password
     }
     if(password === conPass){
-      axios.post("http://10.0.2.2:3000/regis", data)
-      .then((res) => {
+      // axios.post("http://10.0.2.2:3000/regis", data)
+      axios.post("http://localhost:3000/regis", data)
+      .then(async (res) => {
         if(res.status === 200){
           console.log(res.data)
+          navigation.navigate('Login')
         } else {
           console.log("Oh no something wrong!")
+          alert("Oh no something wrong!")
         }
       })
     } else {
