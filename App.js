@@ -10,6 +10,8 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Quiz from './GameScreen/Quiz';
 import Favorite from "./Favorite";
 import Rewards from './Rewards';
+import Login from './screens/login'
+import Regis from './screens/register'
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -27,7 +29,9 @@ export default function App() {
   return (
     //<Dictionary></Dictionary>
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Dictionary" screenOptions={{ headerStyle: { backgroundColor: "blueviolet" } }}>
+      <Stack.Navigator initialRouteName="Login" screenOptions={{ headerStyle: { backgroundColor: "blueviolet" } }}>
+        <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="Register" component={Regis} />
         <Stack.Screen name="Dictionary" component={MyTab} options={{ headerShown: false }}
         />
         <Stack.Screen name="DicDetail" component={DicDetail} options={

@@ -11,6 +11,11 @@ const Register = () => {
   const [password, setPass] = React.useState('');
   const [conPass, setConPass] = React.useState('');
   const navigation = useNavigation();
+  
+  const back = async () => {
+    navigation.navigate('Login')
+  }
+
   const loginFunc = async () => {
     let data = {
       username: username,
@@ -53,7 +58,7 @@ const Register = () => {
     <Button mode="contained" onPress={loginFunc} style={{margin: 10}}>
       Confirm
     </Button>
-    <Button mode="contained"  style={{margin: 10}}>
+    <Button mode="contained"  style={{margin: 10}} onPress={back}>
       Cancel
     </Button>
     </View>

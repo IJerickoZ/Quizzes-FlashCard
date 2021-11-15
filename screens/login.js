@@ -16,7 +16,8 @@ const Login = () => {
       username: username,
       password: password
     }
-    axios.post("http://10.0.2.2:3000/login/", data)
+    // axios.post("http://10.0.2.2:3000/login/", data)
+    axios.post("http://localhost:3000/login/", data)
     .then((res) => {
       if(res.status === 200){
         let token_v = res.data
