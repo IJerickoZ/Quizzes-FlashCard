@@ -20,7 +20,7 @@ const Login = () => {
     axios.post("http://localhost:3000/login/", data)
     .then((res) => {
       if(res.status === 200){
-        let token_v = res.data
+        let token_v = res.data.token
         AsyncStorage.setItem('token', token_v)
         setToken(token_v)
         if(token.length > 0){

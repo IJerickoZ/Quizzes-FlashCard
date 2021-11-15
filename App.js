@@ -18,7 +18,7 @@ const Tab = createBottomTabNavigator();
 function MyTab(){
   return(
     <Tab.Navigator>
-      <Tab.Screen name="Dictionary" component={Dictionary}/>
+      <Tab.Screen name="DictionaryTab" component={Dictionary}/>
       <Tab.Screen name="Favorite" component={Favorite}/>
       <Tab.Screen name="Quiz" component={Quiz}/>
       <Tab.Screen name="Achievement" component={Rewards}/>
