@@ -29,6 +29,7 @@ const GameScreen = (props) => {
   console.log(props);
   //set up before game start
   const wordList = [];
+  const [score, setScore] = useState(0);
   const [word, setWord] = useState([]);
   const [hint, setHint] = useState("");
   const [wrongCount, setWrongCount] = useState(0);
@@ -81,6 +82,7 @@ const GameScreen = (props) => {
         setVictory(response.data[0].word.length),
         setInputStatus(true),
         setLP(7)
+        setScore(localStorage.getItem('score'))
       });
   
 
@@ -141,7 +143,7 @@ const GameScreen = (props) => {
           H a n g M a n!?
         </Text>
         <Text style={{ fontSize: 20, fontFamily: 'kanit' }}>
-          คะแนนสะสมของคุณคือ : 0
+          คะแนนสะสมของคุณคือ : {score}
         </Text>
         <Text style={{ fontSize: 20, fontFamily: 'kanit' }}>
           โอกาสในการตอบเหลือ : {lifePoint}

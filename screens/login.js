@@ -21,7 +21,9 @@ const Login = () => {
     .then((res) => {
       if(res.status === 200){
         let token_v = res.data.token
+        let score_s = res.data.score
         AsyncStorage.setItem('token', token_v)
+        AsyncStorage.setItem('score', score_s)
         setToken(token_v)
         if(token.length > 0){
             navigation.navigate('Dictionary')

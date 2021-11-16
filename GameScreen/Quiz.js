@@ -33,6 +33,21 @@ const Quiz = (props) => {
     setDef('');
   };
 
+  const incScore = () => {
+    let user_token = localStorage.getItem('token')
+    // in EM use => "http://10.0.2.2:3000/" + route path
+    axios.put("http://localhost:3000/score", user_token)
+    .then((res) => {
+      if(res.status === 200){
+        let score_s = res.data
+        AsyncStorage.setItem('score', score_s)
+      } else {
+        console.log("Error found!?")
+      }
+    })
+  }
+
+
   let content = (
     <GameScreen
       GameEndHandler={GameEndHandler}
@@ -45,6 +60,7 @@ const Quiz = (props) => {
     content = <GameOverScreen answer={correctWord} GameReset={GameReset} def={defination}></GameOverScreen>;
   }
   else if(status == false){
+    incScore();
     content = <VictoryScreen answer={correctWord} GameReset={GameReset} def={defination}></VictoryScreen>
   }
 
