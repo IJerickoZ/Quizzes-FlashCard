@@ -4,8 +4,36 @@ import { Divider, Text, Drawer, Appbar, ProgressBar, Colors   } from 'react-nati
 
 function Rewards() {
   const [score, setScore] = React.useState(localStorage.getItem('score'))
-  const [progress, setProgress] = React.useState()
-
+  
+  //prevent infinite loop
+  let progress = 0;
+  if(score >= 1 && score < 5){
+    progress = 1
+  }
+  if(score >=5 && score < 10){
+    progress = 2
+  }
+  if(score >= 10 && score < 20){
+    progress = 3
+  }
+  if(score >= 20 && score < 30){
+    progress = 4
+  }
+  if(score >= 30 && score < 50){
+    progress = 5
+  }
+  if(score >= 50 && score < 70){
+    progress = 6
+  }
+  if(score >= 70 && score < 100){
+    progress = 7
+  }
+  if(score >= 100 && score < 125){
+    progress = 8
+  }
+  if(score >= 125 && score < 150){
+    progress = 9
+  }
   
   return (
     <View style={{flex:1}}>
@@ -15,7 +43,7 @@ function Rewards() {
         <Text>แต้มชนะสะสมของคุณคือ : {score}</Text>
       </View>
 
-      <ProgressBar progress={progress} color={Colors.yellow800} style={{height:30}}/>
+      <ProgressBar progress={progress*0.08} color={Colors.yellow800} style={{height:30}}/>
       {/* ส่วนที่ 2 */}
       {/* https://materialdesignicons.com/ */}
       <View style={{ flex: 3, backgroundColor: "#9575CD", alignItems: 'center'}} >
