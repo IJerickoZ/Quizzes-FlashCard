@@ -17,6 +17,7 @@ import { random } from "./random";
 import { metaData } from "./random";
 import { useFonts } from 'expo-font';
 
+
 const GameScreen = (props) => {
   const [loaded] = useFonts({
     MochiyPopPOne: require('../assets/fonts/MochiyPopPOneRegular.ttf'),

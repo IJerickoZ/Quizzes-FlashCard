@@ -1,11 +1,22 @@
 import * as React from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { Divider, Text, Drawer, Appbar, ProgressBar, Colors   } from 'react-native-paper';
-
-function Rewards() {
-  const [score, setScore] = React.useState(localStorage.getItem('score'))
+import { useIsFocused } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+function Rewards({navigation}) {
   
+  const [score, setScore] = React.useState(localStorage.getItem('score'))
+
+  //hook when click tab navigation to re-render
+  React.useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      setScore(localStorage.getItem('score'))
+    });
+    return unsubscribe;
+  }, [navigation]);
+
   //prevent infinite loop
+  //set up progress bar
   let progress = 0;
   if(score >= 1 && score < 5){
     progress = 1
