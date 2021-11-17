@@ -33,8 +33,9 @@ router.put('/score', async (req, res, next) => {
             .then(async function(user) {
                 if(user.token === token){
                     await client.db('user').collection('account').findOneAndUpdate({"id" : user.id}, { $inc: { "score" : 1 }})
-                    res.status(200).send("update score user ID " + user.id)
                 }
+                let updated_score = await client.db('user').collection('account').findOne({"id" : user.id})
+                res.status(200).send({score : updated_score.score})
             }).catch(function(err) {
                 return res.status(400).send(err)
             })
