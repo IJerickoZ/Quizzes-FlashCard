@@ -9,7 +9,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Quiz from './GameScreen/Quiz';
 import Favorite from "./Favorite";
-import Rewards from './Rewards';
+import Rewards from './screens/Rewards';
 import Login from './screens/login'
 import Regis from './screens/register'
 
