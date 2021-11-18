@@ -21,6 +21,7 @@ router.post("/setcard", async(req, res, next)=>{
               }
         )
         res.send("SetCards Complete")
+        console.log(req.body)
         
     }catch (error){
         console.log(error)
@@ -28,14 +29,31 @@ router.post("/setcard", async(req, res, next)=>{
 })
 
 router.get("/getcardItem", async(req,res,next)=>{
-    let result = [];
+    let result;
+    let num = parseInt(req.query.search)
     await client.connect()
     const session = client.startSession();
     try{
-        result = await client.db("user").collection("SetCard").find();
+        result = await client.db("user").collection("SetCard").findOne({cardSetNum : num});
+        res.send(result)
     }catch(error){
         console.log(error)
     }
-    res.send(result);
+    console.log(result);
+    console.log(req.query.search)
 })
+router.get("/getcardItemAll", async(req,res,next)=>{
+    let result;
+    await client.connect()
+    const session = client.startSession();
+    try{
+        result = await client.db("user").collection("SetCard").find({}).toArray()
+        res.send(result)
+    }catch(error){
+        console.log(error)
+    }
+    console.log(result);
+    console.log(req.query.search)
+})
+
 exports.router = router;

@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { View, Text, Button } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
+import axios from "axios";
 import {
   Searchbar,
   Appbar,
@@ -20,27 +21,27 @@ export default function Favorite() {
   const [listcard, setlistcard] = useState(false);
   const [cardName, setcardName] = useState("");
   const [num, setnum] = useState(1);
-  console.log(card);
+  let result = [];
+  useEffect(()=>{
+    axios.get("http://localhost:3000/getcardItemAll")
+    .then((res)=>{
+      result = res.data
+      setcard(result);
+      setnum(result[result.length-1].cardSetNum+1)
+    })
+  },[])
   return (
     <View style={{ flex: 1 }}>
       <View style={{ flex: 7, flexDirection: "column" }}>
-          {card.map((item)=>
-            <Card style={{ margin: 10 }}>
-                <Card.Content>
-                    <Title>{item.cardname}</Title>
-                </Card.Content>
-            </Card>
-          )}
-        {/*<Card style={{ margin: 10 }}>
-          <Card.Content>
-            <Title>คําศัพท์ชุดที่ 1</Title>
-          </Card.Content>
-        </Card>
-        <Card style={{ margin: 10 }}>
-          <Card.Content>
-            <Title>คําศัพท์ชุดที่ 2</Title>
-          </Card.Content>
-  </Card>*/}
+        {card.map((item, index) => (
+          <Card key={index} style={{ margin: 10 }}>
+            <Card.Content>
+              <Title>
+                {item.cardname}
+              </Title>
+            </Card.Content>
+          </Card>
+        ))}
       </View>
       <View
         style={{
@@ -59,27 +60,44 @@ export default function Favorite() {
             setlistcard(!listcard);
           }}
         />
-        {listcard && <TextInput label="List Name" onChangeText={(val)=>{
-            setcardName(val)
-        }} />}
+        {listcard && (
+          <TextInput
+            label="List Name"
+            onChangeText={(val) => {
+              setcardName(val);
+            }}
+          />
+        )}
         {listcard && (
           <Button
             title="Enter"
             onPress={() => {
               setlistcard(!listcard);
-              setcard([...card,{
-                  cardname:cardName,
-                  cardSetNum: num,
-                  cardOpen: true,
-                  cardList: [
-                    {
-                      word: "",
-                      meaning: "",
-                    },
-                  ],
-                },
-              ]);
-              setnum(num+1);
+              let data = {
+                cardname: cardName,
+                cardSetNum: num,
+                cardOpen: true,
+                cardList: [
+                  {
+                    word: "",
+                    meaning: "",
+                  },
+                ],
+              };
+              let number = {
+                lek: num,
+              };
+              axios.post("http://localhost:3000/setcard", data).then((res) => {
+                console.log(res.data);
+                axios
+                  .get("http://localhost:3000/getcardItem?search="+number.lek)
+                  .then((res) => {
+                    console.log(number)
+                    console.log(res.data);
+                    setcard([...card, res.data]);
+                  });
+              });
+              setnum(num + 1);
             }}
           />
         )}
