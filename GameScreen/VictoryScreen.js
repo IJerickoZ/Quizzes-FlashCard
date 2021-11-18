@@ -40,7 +40,7 @@ const VictoryScreen = (props) => {
               cy="80"
               r="20"
               stroke="black"
-              stroke-width="4"
+              strokeWidth="4"
               fill="white"
             />
           </G>
