@@ -1,6 +1,8 @@
 import React,{useState, useEffect} from "react";
 import { View, Text } from "react-native";
 import axios from "axios";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
 import {
   Searchbar,
   Appbar,
@@ -15,15 +17,23 @@ import {
   List
 } from "react-native-paper";
 
-export default function DicDetail({ route, navigation }) {
+export default function DicDetail({ route }) {
   const { word, meaning } = route.params;
   const [card, setcard] = useState([]);
+  const navigation = useNavigation();
   let result;
   useEffect(()=>{
-    axios.get("http://localhost:3000/getcardItemAll").then((res) => {
-      result = res.data;
-      setcard(result);
-    });
+    const fetchData = async () => {
+      let data = {
+        token: await AsyncStorage.getItem('token')
+      }
+      axios.post("http://localhost:3000/getcardItemAll", data).then((res) => {
+        console.log(res.data)
+        result = res.data;
+        setcard(result);
+      });
+    }
+    fetchData();
   },[])
   return (
     <View style={{ flex: 1 }}>
@@ -53,12 +63,12 @@ export default function DicDetail({ route, navigation }) {
                   let data = {
                     word: word,
                     meaning: meaning[0].definitions[0].definition,
-                    in: item.cardSetNum
+                    in: item.cardSetNum,
                   }
                   axios.put("http://localhost:3000/updatecard", data)
                   .then((res)=>{
-                    console.log(res.data);
-                    navigation.navigate("DictionaryTab");
+                    alert("Add Complete")
+                    navigation.navigate('Dictionary')
                   })
                 }}/>
               )}

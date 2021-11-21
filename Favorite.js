@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { View, Text, Button } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import axios from "axios";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   Searchbar,
   Appbar,
@@ -22,13 +23,24 @@ export default function Favorite({navigation}) {
   const [cardName, setcardName] = useState("");
   const [num, setnum] = useState(1);
   let result = [];
+  const getCard = useCallback(async() => {
+    let data = {
+      token: await AsyncStorage.getItem("token")
+    }
+    await axios.post("http://localhost:3000/getcardItemAll", data).then((res) => {
+      console.log(res.data);
+      if(res.data.length === 0){
+        setcard(res.data);
+      } else {
+        result = res.data;
+        setcard(result);
+        setnum(result[result.length - 1].cardSetNum + 1);
+      }
+    })
+  }, [])
   useEffect(() => {
-    axios.get("http://localhost:3000/getcardItemAll").then((res) => {
-      result = res.data;
-      setcard(result);
-      setnum(result[result.length - 1].cardSetNum + 1);
-    });
-  }, []);
+    getCard();
+  }, [getCard]);
   return (
     <View style={{ flex: 1 }}>
       <View style={{ flex: 7, flexDirection: "column" }}>
@@ -44,20 +56,14 @@ export default function Favorite({navigation}) {
                 icon="minus"
                 size={50}
                 color={Colors.red500}
-                onPress={() => {
-                  axios
+                onPress={async() => {
+                  await axios
                     .delete(
                       "http://localhost:3000/deletecard/" + item.cardSetNum
                     )
                     .then((res) => {
                       console.log("delete complete");
-                      axios
-                        .get("http://localhost:3000/getcardItemAll")
-                        .then((res) => {
-                          result = res.data;
-                          setcard(result);
-                          setnum(result[result.length - 1].cardSetNum + 1);
-                        });
+                      getCard();
                     });
                 }}
               />
@@ -93,27 +99,23 @@ export default function Favorite({navigation}) {
         {listcard && (
           <Button
             title="Enter"
-            onPress={() => {
+            onPress={async() => {
               setlistcard(!listcard);
+              let token = await AsyncStorage.getItem("token")
               let data = {
                 cardname: cardName,
                 cardSetNum: num,
                 cardOpen: true,
+                token: token,
                 cardList: [
                 ],
               };
               let number = {
                 lek: num,
               };
-              axios.post("http://localhost:3000/setcard", data).then((res) => {
+              await axios.post("http://localhost:3000/setcard", data).then((res) => {
                 console.log(res.data);
-                axios
-                  .get("http://localhost:3000/getcardItem?search=" + number.lek)
-                  .then((res) => {
-                    console.log(number);
-                    console.log(res.data);
-                    setcard([...card, res.data]);
-                  });
+                getCard();
               });
               setnum(num + 1);
             }}

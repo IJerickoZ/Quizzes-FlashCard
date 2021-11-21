@@ -9,11 +9,12 @@ router.post("/setcard", async(req, res, next)=>{
     await client.connect()
     const session = client.startSession();
     try{
-        client.db("user").collection("SetCard").insertOne(
+        await client.db("user").collection("SetCard").insertOne(
             {
                 cardname: req.body.cardname,
                 cardSetNum: req.body.cardSetNum,
                 cardOpen: req.body.cardOpen,
+                token: req.body.token,
                 cardList:[]
               }
         )
@@ -39,13 +40,19 @@ router.get("/getcardItem", async(req,res,next)=>{
     console.log(result);
     console.log(req.query.search)
 })
-router.get("/getcardItemAll", async(req,res,next)=>{
+router.post("/getcardItemAll", async(req,res,next)=>{
     let result;
+    let token = req.body.token
+    console.log(token)
     await client.connect()
     const session = client.startSession();
     try{
-        result = await client.db("user").collection("SetCard").find({}).toArray()
-        res.send(result)
+        result = await client.db("user").collection("SetCard").find({token: token}).toArray()
+        if(result){
+            res.send(result)
+        }else{
+            res.send("No Data")
+        }
     }catch(error){
         console.log(error)
     }
@@ -58,7 +65,7 @@ router.delete("/deletecard/:id", async(req, res, next)=>{
     let result = parseInt(req.params.id);
     const session = client.startSession();
     try{
-        client.db("user").collection("SetCard").deleteOne({cardSetNum: result})
+        await client.db("user").collection("SetCard").deleteOne({cardSetNum: result})
     }catch(error){
         console.log(error)
     }
