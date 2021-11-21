@@ -51,6 +51,7 @@ const Login = () => {
       style={{margin:10}}
       label="password"
       value={password}
+      secureTextEntry={true}
       onChangeText={text => setPass(text)}
     />
     <Button mode="contained" onPress={loginFunc} style={{margin: 10}}>

@@ -50,12 +50,14 @@ const Register = () => {
       style={{margin:10}}
       label="Password"
       value={password}
+      secureTextEntry={true}
       onChangeText={text => setPass(text)}
     />
     <TextInput
       style={{margin:10}}
       label="Confirm password"
       value={conPass}
+      secureTextEntry={true}
       onChangeText={text => setConPass(text)}
     />
     <Button mode="contained" onPress={loginFunc} style={{margin: 10}}>
