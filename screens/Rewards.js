@@ -48,6 +48,12 @@ function Rewards({navigation}) {
   if(score >= 125 && score < 150){
     progress = 9
   }
+  if(score >= 150 && score < 200){
+    progress = 10
+  }
+  if(score >= 200){
+    progress = 11
+  }
   
   return (
     <View style={{flex:1}}>
@@ -57,7 +63,7 @@ function Rewards({navigation}) {
         <Text style={{fontSize: 16, fontFamily: 'Kanit'}}>แต้มชนะสะสมของคุณคือ : {score}</Text>
       </View>
 
-      <ProgressBar progress={progress*0.08} color={Colors.yellow800} style={{height:30}}/>
+      <ProgressBar progress={progress*0.091} color={Colors.yellow800} style={{height:30}}/>
       {/* ส่วนที่ 2 */}
       {/* https://materialdesignicons.com/ */}
       <View style={{ flex: 3, backgroundColor: "#9575CD", alignItems: 'center'}} >
