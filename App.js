@@ -12,6 +12,7 @@ import Favorite from "./Favorite";
 import Rewards from './screens/Rewards';
 import Login from './screens/login'
 import Regis from './screens/register'
+import FavoriteDetail from './FavoriteDetail';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -40,6 +41,7 @@ export default function App() {
           }
         }/>
         <Stack.Screen name="Quiz" component={Quiz} />
+        <Stack.Screen name="FavoriteDetail" component={FavoriteDetail}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

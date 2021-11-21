@@ -14,10 +14,7 @@ router.post("/setcard", async(req, res, next)=>{
                 cardname: req.body.cardname,
                 cardSetNum: req.body.cardSetNum,
                 cardOpen: req.body.cardOpen,
-                cardList:[{
-                  word: req.body.cardList[0].word,
-                  meaning:req.body.cardList[0].meaning
-                }]
+                cardList:[]
               }
         )
         res.send("SetCards Complete")
@@ -54,6 +51,43 @@ router.get("/getcardItemAll", async(req,res,next)=>{
     }
     console.log(result);
     console.log(req.query.search)
+})
+
+router.delete("/deletecard/:id", async(req, res, next)=>{
+    await client.connect()
+    let result = parseInt(req.params.id);
+    const session = client.startSession();
+    try{
+        client.db("user").collection("SetCard").deleteOne({cardSetNum: result})
+    }catch(error){
+        console.log(error)
+    }
+    res.send("Delete Complete");
+})
+
+router.put("/updatecard", async(req, res, next)=>{
+    await client.connect()
+    const session = client.startSession();
+    let num = parseInt(req.body.in);
+    try{
+        client.db("user").collection("SetCard").updateOne({cardSetNum: num}, {$push:{cardList:req.body}})
+    }catch(error){
+        console.log(error)
+    }
+    res.send("Update Complete")
+})
+
+router.get("/getwordfromset", async(req, res, next)=>{
+    await client.connect()
+    const session = client.startSession();
+    let num = parseInt(req.query.search)
+    let result;
+    try{
+        result = await client.db("user").collection("SetCard").findOne({cardSetNum:num})
+        res.send(result.cardList);
+    }catch(error){
+        console.log(error)
+    }
 })
 
 exports.router = router;
