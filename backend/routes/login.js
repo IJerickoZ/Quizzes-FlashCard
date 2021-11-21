@@ -4,7 +4,7 @@ const client = require("../config");
 const router = express.Router();
 const Joi = require('joi')
 const { generateToken } = require("../util/genToken")
-
+const bcrypt = require('bcrypt')
 const loginSchema = Joi.object({
     username: Joi.string().required(),
     password: Joi.string().required()
@@ -18,9 +18,10 @@ router.post('/login', async (req, res, next) => {
     }
     let username = req.body.username
     let password = req.body.password
+    let pass_hash = await bcrypt.hash(password, 5)
 
     await client.connect()
-    const session = client.startSession();
+    const session = client.startSession()
 
     const transactionOptions = {
         readPreference: 'primary',
@@ -30,9 +31,10 @@ router.post('/login', async (req, res, next) => {
 
     try {
         await session.withTransaction(async () => {
-            await client.db('user').collection('account').findOne({username: username, password: password}, {explicit: true})
+            await client.db('user').collection('account').findOne({username: username}, {explicit: true})
             .then(async function(user) {
-                if(user.username === username && user.password === password){
+                console.log(user)
+                if(user.username === username && await bcrypt.compare(password, user.password)){
                     let token = await client.db('user').collection('token').findOne({id: user.id}, {session})
                     if(token === null){
                         token = generateToken()

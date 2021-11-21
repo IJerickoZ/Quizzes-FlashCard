@@ -4,7 +4,7 @@ const client = require("../config");
 const router = express.Router();
 const Joi = require('joi');
 const { Session } = require("inspector");
-
+const bcrypt = require('bcrypt')
 const regisSchema = Joi.object({
     username: Joi.string().required(),
     password: Joi.string().required()
@@ -18,7 +18,7 @@ router.post("/regis", async function(req, res, next) {
     }
 
     let username = req.body.username
-    let password = req.body.password
+    let password = await bcrypt.hash(req.body.password, 5)
 
     await client.connect()
     const session = client.startSession();
