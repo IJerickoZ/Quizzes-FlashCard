@@ -27,7 +27,7 @@ const GameScreen = (props) => {
   
 
   //check props recive
-  console.log(props);
+  //console.log(props);
   //set up before game start
   const wordList = [];
   const [score, setScore] = useState(0);
@@ -55,7 +55,7 @@ const GameScreen = (props) => {
   const guessInput = (inputText) => {
     setEntered(inputText);
     let g = enteredGuess;
-    console.log(g);
+    //console.log(g);
   };
 
   //get ramdom word
@@ -94,7 +94,6 @@ const GameScreen = (props) => {
 
   //check input
   const checkAnswer = () => {
-    console.log("Upper case is " + enteredGuess.toUpperCase());
     //reset input
     setEntered("");
     //to debug correct count char
@@ -112,9 +111,6 @@ const GameScreen = (props) => {
       setCorrectCount(correctCount + count);
       setCorrect(tester);
       setEntered("");
-      console.log("Char in corect list : " + correctWord);
-      console.log("Wordlist length = " + wordList.length);
-      console.log("Correct count = " + correctCount);
     } else {
       //wrong answer
       setWrongCount(wrongCount + 1);

@@ -22,7 +22,7 @@ const Tab = createBottomTabNavigator();
 function MyTab(){
   return(
     <Tab.Navigator>
-      <Tab.Screen name="DictionaryTab" component={Dictionary}
+      <Tab.Screen name="Dictionary" component={Dictionary}
         options={{
           tabBarIcon: ({ color, size }) => {
           return <FontAwesome5 name="book" size={24} color="#6200ee" />;
