@@ -13,16 +13,43 @@ import Rewards from './screens/Rewards';
 import Login from './screens/login'
 import Regis from './screens/register'
 import FavoriteDetail from './FavoriteDetail';
+import { Ionicons } from '@expo/vector-icons';
+import { FontAwesome5 } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 function MyTab(){
   return(
     <Tab.Navigator>
-      <Tab.Screen name="DictionaryTab" component={Dictionary}/>
-      <Tab.Screen name="Favorite" component={Favorite}/>
-      <Tab.Screen name="Quiz" component={Quiz}/>
-      <Tab.Screen name="Achievement" component={Rewards}/>
+      <Tab.Screen name="DictionaryTab" component={Dictionary}
+        options={{
+          tabBarIcon: ({ color, size }) => {
+          return <FontAwesome5 name="book" size={24} color="#6200ee" />;
+          },
+        }}
+      />
+      <Tab.Screen name="Favorite" component={Favorite}
+        options={{
+          tabBarIcon: ({ color, size }) => {
+          return <MaterialIcons name="favorite" size={24} color="#6200ee" />;
+          },
+        }}
+      />
+      <Tab.Screen name="Quiz" component={Quiz} 
+          options={{
+            tabBarIcon: ({ color, size }) => {
+            return <Ionicons name="game-controller" size={24} color="#6200ee" />;
+            },
+          }}
+      />
+      <Tab.Screen name="Achievement" component={Rewards}
+        options={{
+            tabBarIcon: ({ color, size }) => {
+            return <FontAwesome5 name="trophy" size={24} color="#6200ee" />;
+            },
+          }}
+      />
     </Tab.Navigator>
   );
 }

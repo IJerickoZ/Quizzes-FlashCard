@@ -61,9 +61,6 @@ export default function Favorite({navigation}) {
                     });
                 }}
               />
-              {/*<Title style={{flex:1,flexDirection:"row",justifyContent:"flex-end"}}>
-                Bag
-        </Title>*/}
             </Card.Content>
           </Card>
         ))}
