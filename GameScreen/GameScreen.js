@@ -16,6 +16,7 @@ import axios from "axios";
 import { random } from "./random";
 import { metaData } from "./random";
 import { useFonts } from 'expo-font';
+import { color } from "react-native-reanimated";
 
 
 const GameScreen = (props) => {
@@ -30,7 +31,7 @@ const GameScreen = (props) => {
   //console.log(props);
   //set up before game start
   const wordList = [];
-  const [score, setScore] = useState(0);
+  const [score, setScore] = useState(localStorage.getItem('score'));
   const [word, setWord] = useState([]);
   const [hint, setHint] = useState("");
   const [wrongCount, setWrongCount] = useState(0);
@@ -134,10 +135,16 @@ const GameScreen = (props) => {
     <View style={styles.container}>
       {/* header */}
       <View
-        style={{ flex: 1, alignItems: "center" }}
+        style={styles.headerZone}
       >
         <Text style={{fontFamily:'MochiyPopPOne', fontSize: 36, color: 'rgb(98, 0, 238)' }}>
-          H a n g M a n!?
+          H a n g
+          <Text style={{fontFamily:'MochiyPopPOne', fontSize: 36}}>
+           {" "}M a n
+            <Text style={{fontFamily:'MochiyPopPOne', fontSize: 36, color: 'red' }}>
+              !?
+          </Text>
+          </Text>
         </Text>
         <Text style={{ fontSize: 20, fontFamily: 'kanit' }}>
           คะแนนสะสมของคุณคือ : {score}
@@ -296,13 +303,7 @@ const GameScreen = (props) => {
       {/* Guess Zone */}
       <View style={{ flex: 1.5 }}>
         <View
-          style={{
-            borderWidth: "2px",
-            margin: 5,
-            alignItems: "center",
-            justifyContent: 'center',
-            flexDirection: "row",
-          }}
+          style={styles.guessZone}
         >
           {status ? null : (
             <Text style={{ fontSize: 30, fontFamily: 'MochiyPopPOne'}}>
@@ -367,8 +368,8 @@ const GameScreen = (props) => {
         </View>
       </View>
       {/* Hint Zone */}
-      <View style={{ flex: 1}}>
-        <Title style={{ fontSize: 30, fontFamily: 'MochiyPopPOne'}}>Hint : คำใบ้</Title>
+      <View style={styles.hintZone}>
+        <Title style={{ fontSize: 30, fontFamily: 'MochiyPopPOne', zIndex: 5}}> Hint : คำใบ้</Title>
         <ScrollView>
           <Text style={{ fontSize: 24, paddingLeft: 5, color:'#ff4545' }}>
           {hint}
@@ -382,8 +383,28 @@ const GameScreen = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f7f7f7",
+    backgroundColor: 'rgba(149, 117, 205, 0.3)',
   },
+  hintZone: { 
+    flex: 1, backgroundColor: '#fff', borderTopLeftRadius: 20, 
+    borderTopRightRadius: 20,
+    overflow: "hidden"
+  },
+  guessZone : {
+    borderWidth: "2px",
+    margin: 5,
+    alignItems: "center",
+    justifyContent: 'center',
+    flexDirection: "row",
+    backgroundColor: '#fff',
+  },
+  headerZone : { 
+    flex: 1, 
+    alignItems: "center", 
+    backgroundColor: '#fff', 
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20
+  }
 });
 
 export default GameScreen;

@@ -58,7 +58,7 @@ function Rewards({navigation}) {
   return (
     <View style={{flex:1}}>
       {/* ส่วนที่ 1 */}
-      <View style={{backgroundColor: "white", alignItems: 'center', justifyContent: 'center', margin: 20}} >
+      <View style={{backgroundColor: "white", alignItems: 'center', justifyContent: 'center', margin: 20, borderRadius: 20}} >
         <Text style={{fontSize: 35, fontFamily: 'Kanit'}}>รางวัลความสำเร็จ</Text>
         <Text style={{fontSize: 16, fontFamily: 'Kanit'}}>แต้มชนะสะสมของคุณคือ : {score}</Text>
       </View>
