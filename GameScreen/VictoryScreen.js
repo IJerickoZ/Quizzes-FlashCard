@@ -15,24 +15,27 @@ const VictoryScreen = (props) => {
 
   return (
     <View style={styles.container}>
-      <Text
-        style={{ fontFamily: "MochiyPopPOne", fontSize: 36, color: "#ffd900" }}
+            <View
+        style={{
+          flex: 1,
+          alignItems: "center",
+          backgroundColor: '#fff',
+          borderBottomLeftRadius: 20,
+          borderBottomRightRadius: 20,
+        }}
+      >
+        <Text
+        style={{ fontFamily: "MochiyPopPOne", fontSize: 36, color: "rgb(255, 249, 77)" }}
       >
         Congrantulation!!!
       </Text>
-      <Text style={{ fontFamily: "MochiyPopPOne", fontSize: 24 }}>
-        You win!!!
-      </Text>
-      <Text style={{ fontFamily: "MochiyPopPOne", fontSize: 24 }}>
-        Answer is
-      </Text>
       <Text style={{ fontFamily: "MochiyPopPOne", fontSize: 30 }}>
-        {props.answer}
+        You win this round
       </Text>
-      <Text style={{ fontSize: 24, color: "#2eab00", margin: 5 }}>
-        {props.def}
-      </Text>
-      <Svg height="200" width="400">
+      </View>
+
+      <View style={{ flex: 2, alignItems: "center" }}>
+            <Svg height="200" width="400">
         <G id="body">
           <G id="head">
             <Circle
@@ -114,7 +117,26 @@ const VictoryScreen = (props) => {
           </G>
         </G>
       </Svg>
-      <View style={{ paddingTop: 10 }}>
+      </View>
+
+      <Text style={{ fontSize: 30, fontFamily: "MochiyPopPOne", alignSelf: 'center', padding: 5 }}>
+          The answer is
+        </Text>
+
+        <View style={{ flex: 2, backgroundColor: "#fff", borderRadius: 20, borderWidth:2, borderColor: 'black' }}>
+        <Text style={{ fontSize: 36, fontFamily: "MochiyPopPOne" }}>
+          {" "}{props.answer}
+        </Text>
+        <Text style={{ fontSize: 24, fontFamily: "MochiyPopPOne" }}>
+          {" "}
+          Meaning :{" "}
+        </Text>
+        <Text style={{ fontSize: 24, color: "#2eab00", margin: 5 }}>
+          {props.def}
+        </Text>
+      </View>  
+
+      <View style={{ flex: 1, paddingTop: 10, alignItems: "center" }}>
         <TouchableOpacity
           style={{
             alignItems: "center",
@@ -146,8 +168,7 @@ const VictoryScreen = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
+    backgroundColor: "rgba(149, 117, 205, 0.3)",
   },
 });
 

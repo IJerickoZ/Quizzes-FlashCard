@@ -34,8 +34,9 @@ function MyTab(){
           },
         }}
       />
-      <Tab.Screen name="Quiz" component={Quiz} 
+      <Tab.Screen name="HangMan" component={Quiz} 
           options={{
+            headerShown: false,
             tabBarIcon: ({ color, size }) => {
             return <Ionicons name="game-controller" size={24} color="#6200ee" />;
             },
@@ -43,6 +44,7 @@ function MyTab(){
       />
       <Tab.Screen name="Achievement" component={Rewards}
         options={{
+            headerShown: false,
             tabBarIcon: ({ color, size }) => {
             return <FontAwesome5 name="trophy" size={24} color="#6200ee" />;
             },
@@ -64,7 +66,7 @@ export default function App() {
             title:route.params.word.toString()
           }
         }/>
-        <Stack.Screen name="Quiz" component={Quiz} />
+        <Stack.Screen name="HangMan" component={Quiz} />
         <Stack.Screen name="FavoriteDetail" component={FavoriteDetail}/>
       </Stack.Navigator>
     </NavigationContainer>
