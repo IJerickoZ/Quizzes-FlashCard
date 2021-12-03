@@ -25,7 +25,7 @@ const VictoryScreen = (props) => {
         }}
       >
         <Text
-        style={{ fontFamily: "MochiyPopPOne", fontSize: 36, color: "rgb(255, 249, 77)" }}
+        style={{ fontFamily: "MochiyPopPOne", fontSize: 36, color: "rgb(255, 229, 77)" }}
       >
         Congrantulation!!!
       </Text>
