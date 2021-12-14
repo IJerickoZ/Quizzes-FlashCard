@@ -2,11 +2,13 @@
 
 ## Installation
 1.ทำการแตกไฟล์ และ cd ไปยังโฟลเดอร์ Quizzes-FlashCard
+
 2.พิมพ์คำสั่ง npm install แล้วรอจนติดตั้งเสร็จ
 ```bash
 npm install
 ```
 3.หลังติดตั้งเสร็จและอยู่ในโฟลเดอร์ Quizzes-FlashCard แล้ว ให้ทำการ cd เข้าไปยังโฟลเดอร์ backend
+
 4.พิมพ์คำสั่ง npm install อีกครั้ง
 ```bash
 npm install
