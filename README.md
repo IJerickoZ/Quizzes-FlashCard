@@ -30,5 +30,8 @@ expo start
 - 4.เปิด cmd ขึ้นมาอีกอัน และ cd เข้าไปยังโฟลเดอร์ backend
 
 - 5.พิมพ์คำสั่ง nodemon index.js
+```bash
+nodemon index.js
+```
 
 - 6.ทดลองใช้โปรแกรม!!
