@@ -16,6 +16,7 @@ npm install
 
 ## Usage
 1.cd ไปยังโฟลเดอร์ Quizzes-FlashCard
+
 2.พิมพ์คำสั่ง expo start รอจนมีการเด้งเปิดหน้า Dashboard ขึ้นมาบน Browser
 ```bash
 expo start
@@ -27,5 +28,7 @@ expo start
   <img width="415" alt="Screenshot 2021-12-14 204331" src="https://user-images.githubusercontent.com/41195318/146013457-06c0997f-b0cd-4265-86fe-615f18b9c9fe.png">
   
 4.เปิด cmd ขึ้นมาอีกอัน และ cd เข้าไปยังโฟลเดอร์ backend
+
 5.พิมพ์คำสั่ง nodemon index.js
+
 6.ทดลองใช้โปรแกรม!!
