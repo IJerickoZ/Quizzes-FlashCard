@@ -3,7 +3,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import SelectMode from '../screens/SelectMode'
 import Quiz from './Quiz';
-import Rewards from '../Rewards';
+import Rewards from '../screens/Rewards';
 import GameScreen from './GameScreen';
 
 function GameLayout() {
