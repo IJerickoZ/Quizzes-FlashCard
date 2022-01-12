@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from "react-native";
 import Svg, { Line, Circle, G } from "react-native-svg";
 import { useFonts } from "expo-font";
 
@@ -207,9 +207,12 @@ const GameOverScreen = (props) => {
           {" "}
           Meaning :{" "}
         </Text>
-        <Text style={{ fontSize: 24, color: "#2eab00", margin: 5 }}>
+        <ScrollView>
+          <Text style={{ fontSize: 24, color: "#2eab00", margin: 5 }}>
           {props.def}
         </Text>
+        </ScrollView>
+        
       </View>
 
 
